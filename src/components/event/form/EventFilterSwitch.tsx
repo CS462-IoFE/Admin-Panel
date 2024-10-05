@@ -1,11 +1,12 @@
 import { Switch } from "@mui/material";
 import React from "react";
 import { Controller, useFormContext } from "react-hook-form";
+import { EventFilterI } from "../../../zod-schema/eventFilterSchema";
 
 interface EventFilterSwitchProps {}
 
 const EventFilterSwitch: React.FC<EventFilterSwitchProps> = ({}) => {
-    const { control } = useFormContext();
+    const { control } = useFormContext<EventFilterI>();
 
     return (
         <Controller
