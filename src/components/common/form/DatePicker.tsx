@@ -21,6 +21,7 @@ const DatePicker: React.FC<DatePickerProps> = ({ name, label, variant }) => {
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <MUIDatePicker
                         {...field}
+                        disablePast
                         label={label}
                         slotProps={{
                             textField: {
