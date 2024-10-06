@@ -5,10 +5,12 @@ import EventListingActions from "../../components/event/actions/EventListingActi
 import { zodResolver } from "@hookform/resolvers/zod";
 import { eventFilterSchema } from "../../zod-schema/eventFilterSchema";
 import EventListingTable from "../../components/event/table/EventListingTable";
+import { useNavigate } from "react-router-dom";
 
 interface EventListingProps {}
 
 const EventListing: React.FC<EventListingProps> = ({}) => {
+    const navigate = useNavigate()
     const formState = useForm({ resolver: zodResolver(eventFilterSchema) });
     const { watch } = formState;
     const values = watch();
@@ -34,7 +36,7 @@ const EventListing: React.FC<EventListingProps> = ({}) => {
                     </FormProvider>
                 </Grid>
                 <Grid item>
-                    <Button variant="contained" color="success">
+                    <Button onClick={() => navigate("/event/add")} variant="contained" color="success">
                         Add New Event
                     </Button>
                 </Grid>
