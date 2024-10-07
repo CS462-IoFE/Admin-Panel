@@ -49,7 +49,10 @@ const EventDetails: React.FC<EventDetailsProps> = ({}) => {
             <Grid container direction="column">
                 <EventDetailsDisplay {...rest} />
                 <Divider sx={{ mb: 2, mt: 4 }} />
-                <ParticipantsDisplay attendee_list={attendee_list} />
+                <ParticipantsDisplay
+                    variant="details"
+                    attendee_list={attendee_list}
+                />
                 <Divider sx={{ mb: 2, mt: 4 }} />
                 <StaffPresentDisplay staff_list={staff_list} />{" "}
                 <Divider sx={{ my: 2 }} />
