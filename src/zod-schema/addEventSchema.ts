@@ -8,8 +8,6 @@ const locationSchema = z.object({
     name: z.string(),
 });
 
-z.instanceof(dayjs as unknown as typeof Dayjs);
-
 export const addEventSchema = z.object({
     accessibility: z.boolean().default(false),
     start_time: z.instanceof(dayjs as unknown as typeof Dayjs, {
