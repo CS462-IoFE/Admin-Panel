@@ -13,7 +13,7 @@ interface DeleteEventDialogProps {
     name: string;
 }
 
-const DeleteEventDialog: React.FC<DeleteEventDialogProps> = ({ id, name }) => {
+const DeleteEventDialog: React.FC<DeleteEventDialogProps> = ({ name }) => {
     const [open, setOpen] = useState(false);
 
     return (
