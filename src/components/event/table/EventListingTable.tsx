@@ -10,6 +10,11 @@ import {
 } from "@mui/material";
 import React from "react";
 import { EventListingItem } from "../../../types/event";
+import { useFormContext } from "react-hook-form";
+import { EventFilterI } from "../../../zod-schema/eventFilterSchema";
+import dayjs from "dayjs";
+import { useNavigate } from "react-router-dom";
+import DeleteEventDialog from "../dialog/DeleteEventDialog";
 
 interface EventListingTableProps {}
 
@@ -17,7 +22,7 @@ const rows: EventListingItem[] = [
     {
         id: "1",
         name: "Mass Activity - Water Related",
-        date: "8 Jan 2024",
+        date: "08 Jan 2024",
         location: "Delta Swimming Complex",
         start_time: "10:00am",
         end_time: "12:00pm",
@@ -25,7 +30,7 @@ const rows: EventListingItem[] = [
     {
         id: "2",
         name: "Mass Activity - Water Related",
-        date: "8 Jan 2024",
+        date: "08 Feb 2024",
         location: "Delta Swimming Complex",
         start_time: "10:00am",
         end_time: "12:00pm",
@@ -33,7 +38,7 @@ const rows: EventListingItem[] = [
     {
         id: "3",
         name: "Mass Activity - Water Related",
-        date: "8 Jan 2024",
+        date: "08 Mar 2024",
         location: "Delta Swimming Complex",
         start_time: "10:00am",
         end_time: "12:00pm",
@@ -41,7 +46,7 @@ const rows: EventListingItem[] = [
     {
         id: "4",
         name: "Mass Activity - Water Related",
-        date: "8 Jan 2024",
+        date: "08 Jan 2024",
         location: "Delta Swimming Complex",
         start_time: "10:00am",
         end_time: "12:00pm",
@@ -49,7 +54,7 @@ const rows: EventListingItem[] = [
     {
         id: "5",
         name: "Mass Activity - Water Related",
-        date: "8 Jan 2024",
+        date: "08 Jan 2024",
         location: "Delta Swimming Complex",
         start_time: "10:00am",
         end_time: "12:00pm",
@@ -57,7 +62,7 @@ const rows: EventListingItem[] = [
     {
         id: "6",
         name: "Mass Activity - Water Related",
-        date: "8 Jan 2024",
+        date: "08 Jan 2024",
         location: "Delta Swimming Complex",
         start_time: "10:00am",
         end_time: "12:00pm",
@@ -65,7 +70,7 @@ const rows: EventListingItem[] = [
     {
         id: "7",
         name: "Mass Activity - Water Related",
-        date: "8 Jan 2024",
+        date: "08 Jan 2024",
         location: "Delta Swimming Complex",
         start_time: "10:00am",
         end_time: "12:00pm",
@@ -73,7 +78,7 @@ const rows: EventListingItem[] = [
     {
         id: "8",
         name: "Mass Activity - Water Related",
-        date: "8 Jan 2024",
+        date: "08 Jan 2024",
         location: "Delta Swimming Complex",
         start_time: "10:00am",
         end_time: "12:00pm",
@@ -81,7 +86,7 @@ const rows: EventListingItem[] = [
     {
         id: "9",
         name: "Mass Activity - Water Related",
-        date: "8 Jan 2024",
+        date: "08 Jan 2024",
         location: "Delta Swimming Complex",
         start_time: "10:00am",
         end_time: "12:00pm",
@@ -89,7 +94,7 @@ const rows: EventListingItem[] = [
     {
         id: "10",
         name: "Mass Activity - Water Related",
-        date: "8 Jan 2024",
+        date: "08 Jan 2024",
         location: "Delta Swimming Complex",
         start_time: "10:00am",
         end_time: "12:00pm",
@@ -97,6 +102,10 @@ const rows: EventListingItem[] = [
 ];
 
 const EventListingTable: React.FC<EventListingTableProps> = ({}) => {
+    const { watch } = useFormContext<EventFilterI>();
+    const [sort, isUpcoming] = watch(["sort", "is_upcoming"]);
+    const navigate = useNavigate();
+
     return (
         <TableContainer component={Box}>
             <Table sx={{ minWidth: 800 }}>
@@ -116,48 +125,81 @@ const EventListingTable: React.FC<EventListingTableProps> = ({}) => {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {rows.map(
-                        ({
-                            id,
-                            name,
-                            date,
-                            location,
-                            start_time,
-                            end_time,
-                        }) => (
-                            <TableRow
-                                key={id}
-                                sx={{
-                                    "&:last-child td, &:last-child th": {
-                                        border: 0,
-                                    },
-                                }}
-                            >
-                                {[
-                                    name,
-                                    date,
-                                    location,
-                                    `${start_time}-${end_time}`,
-                                ].map((it, index) => (
-                                    <TableCell key={`${id}-${index}`}>
-                                        {it}
-                                    </TableCell>
-                                ))}
-                                <TableCell>
-                                    <Button
-                                        sx={{ mr: 1 }}
-                                        variant="contained"
-                                        color="primary"
-                                    >
-                                        Edit
-                                    </Button>
-                                    <Button variant="contained" color="error">
-                                        Delete
-                                    </Button>
-                                </TableCell>
-                            </TableRow>
+                    {rows
+                        .map((row) => ({
+                            ...row,
+                            date: dayjs(row.date, "DD MMM YYYY"),
+                        }))
+                        .sort((a, b) =>
+                            (
+                                sort === "date-descending"
+                                    ? a.date.isBefore(b.date)
+                                    : a.date.isAfter(b.date)
+                            )
+                                ? 1
+                                : -1
                         )
-                    )}
+                        .map(
+                            ({
+                                id,
+                                name,
+                                date,
+                                location,
+                                start_time,
+                                end_time,
+                            }) => (
+                                <TableRow
+                                    key={id}
+                                    sx={{
+                                        "&:last-child td, &:last-child th": {
+                                            border: 0,
+                                        },
+                                    }}
+                                >
+                                    {[
+                                        name,
+                                        date.format("DD MMM YYYY"),
+                                        location,
+                                        `${start_time}-${end_time}`,
+                                    ].map((it, index) => (
+                                        <TableCell key={`${id}-${index}`}>
+                                            {it}
+                                        </TableCell>
+                                    ))}
+                                    {isUpcoming ? (
+                                        <TableCell>
+                                            <Button
+                                                sx={{ mr: 1 }}
+                                                variant="contained"
+                                                color="primary"
+                                                onClick={() =>
+                                                    navigate(
+                                                        `/event/${id}/edit`
+                                                    )
+                                                }
+                                            >
+                                                Edit
+                                            </Button>
+                                            <DeleteEventDialog
+                                                {...{ id, name }}
+                                            />
+                                        </TableCell>
+                                    ) : (
+                                        <TableCell>
+                                            <Button
+                                                variant="contained"
+                                                color="primary"
+                                                onClick={() =>
+                                                    navigate(`/event/${id}`)
+                                                }
+                                            >
+                                                View Details
+                                            </Button>
+                                        </TableCell>
+                                    )}
+                                </TableRow>
+                            )
+                        )}
                 </TableBody>
             </Table>
         </TableContainer>
