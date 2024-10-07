@@ -12,15 +12,17 @@ import {
 } from "@mui/material";
 
 interface ParticipantsDisplayProps {
+    variant: "edit" | "details"
     attendee_list: AttendeeListItem[];
 }
 
 const ParticipantsDisplay: React.FC<ParticipantsDisplayProps> = ({
     attendee_list,
+    variant
 }) => {
     return (
         <>
-            <Typography variant="h6" fontWeight={700}>Attended/Attending Participants</Typography>
+            <Typography variant="h6" fontWeight={700}>{ variant === "details" ? "Attended/Attending Participants" : "Expected Participants"}</Typography>
             <TableContainer component={Box}>
                 <Table sx={{ minWidth: 600 }}>
                     <TableHead>
