@@ -6,6 +6,8 @@ import AddEvent from "../pages/event/AddEvent";
 import EditEvent from "../pages/event/EditEvent";
 import Reports from "../pages/Reports";
 import RootLayout from "../pages/RootLayout";
+import UserListing from "../pages/user/UserListing";
+import UserDetails from "../pages/user/UserDetails";
 
 export default createBrowserRouter([
     {
@@ -18,6 +20,8 @@ export default createBrowserRouter([
             { path: "/event/add", element: <AddEvent /> },
             { path: "/event/:id/edit", element: <EditEvent /> },
             { path: "/reports", element: <Reports /> },
+            { path: "/user", element: <UserListing /> },
+            { path: "/user/:id", element: <UserDetails /> },
         ],
     },
 ]);
