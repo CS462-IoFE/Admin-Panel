@@ -5,9 +5,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import EventListingActions from "../../components/event/actions/EventListingActions";
 import EventListingTable from "../../components/event/table/EventListingTable";
-import {
-    eventFilterSchema
-} from "../../zod-schema/eventFilterSchema";
+import { eventFilterSchema } from "../../zod-schema/eventFilterSchema";
 
 interface EventListingProps {}
 
@@ -15,6 +13,10 @@ const EventListing: React.FC<EventListingProps> = ({}) => {
     const navigate = useNavigate();
     const formState = useForm({
         resolver: zodResolver(eventFilterSchema),
+        defaultValues: eventFilterSchema.parse({
+            sort: "date-descending",
+            is_upcoming: true,
+        }),
     });
 
     return (
