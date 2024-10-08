@@ -32,16 +32,16 @@ const AppBar: React.FC<AppBarProps> = ({}) => {
                         alignItems="center"
                         gap={3}
                     >
-                        <Typography onClick={() => navigate("/")}>
-                            Calendar
-                        </Typography>
-
-                        <Typography onClick={() => navigate("/event")}>
-                            Events
-                        </Typography>
-                        <Typography onClick={() => navigate("/reports")}>
-                            Reports
-                        </Typography>
+                        {[
+                            { to: "/", name: "Calendar" },
+                            { to: "/event", name: "Events" },
+                            { to: "/reports", name: "Reports" },
+                            { to: "/user", name: "Users" },
+                        ].map(({ to, name }) => (
+                            <Typography key={name} onClick={() => navigate(to)}>
+                                {name}
+                            </Typography>
+                        ))}
                     </Grid>
                 </Toolbar>
             </MuiAppBar>
