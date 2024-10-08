@@ -9,7 +9,12 @@ import { userFilterSchema } from "../../zod-schema/userFilterSchema";
 interface UserListingProps {}
 
 const UserListing: React.FC<UserListingProps> = ({}) => {
-    const formState = useForm({ resolver: zodResolver(userFilterSchema) });
+    const formState = useForm({
+        resolver: zodResolver(userFilterSchema),
+        defaultValues: userFilterSchema.parse({
+            sort: "name-ascending",
+        }),
+    });
 
     return (
         <FormProvider {...formState}>
