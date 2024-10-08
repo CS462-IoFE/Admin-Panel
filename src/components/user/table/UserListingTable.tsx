@@ -14,6 +14,7 @@ import { useFormContext } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { UserListingItem } from "../../../types/user";
 import DeleteUserDialog from "../dialog/DeleteUserDialog";
+import { UserFilterI } from "../../../zod-schema/userFilterSchema";
 
 interface UserListingTableProps {}
 
@@ -61,7 +62,7 @@ const rows: UserListingItem[] = [
 ];
 
 const UserListingTable: React.FC<UserListingTableProps> = ({}) => {
-    const { watch } = useFormContext();
+    const { watch } = useFormContext<UserFilterI>();
     const [sort] = watch(["sort"]);
     const navigate = useNavigate();
 

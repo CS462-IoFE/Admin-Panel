@@ -3,11 +3,13 @@ import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import SingleSelectField from "../../components/common/form/SingleSelectField";
 import UserListingTable from "../../components/user/table/UserListingTable";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { userFilterSchema } from "../../zod-schema/userFilterSchema";
 
 interface UserListingProps {}
 
 const UserListing: React.FC<UserListingProps> = ({}) => {
-    const formState = useForm();
+    const formState = useForm({ resolver: zodResolver(userFilterSchema) });
 
     return (
         <FormProvider {...formState}>
