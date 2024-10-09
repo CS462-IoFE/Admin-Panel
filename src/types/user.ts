@@ -3,7 +3,8 @@ import { EventListingItem } from "./event";
 export interface UserListingItem {
     id: string;
     name: string;
-    date: string;
+    created_at: string;
+    role: string;
 }
 
 export interface UserDetails {
