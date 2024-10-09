@@ -8,10 +8,10 @@ const configureInstance = (instanceUrl: string) => ({
 });
 
 // Configure the instances by replacing the string for calling configureInstance
-export const logInstance = axios.create(configureInstance(""));
+export const userInstance = axios.create(configureInstance("api/user"));
 
 // Run this line to inject the user token on all request made from the above instance
-logInstance.interceptors.request.use((config) => {
+userInstance.interceptors.request.use((config) => {
     config.headers.Authorization = `Bearer ${import.meta.env.VITE_USER_TOKEN}`;
     return config;
 });
