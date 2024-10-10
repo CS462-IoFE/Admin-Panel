@@ -19,6 +19,7 @@ export interface EventDetails {
     wheelchair_accessible: boolean;
     participants: AttendeeListItem[];
     staff: string[];
+    description: string;
 }
 
 export interface Location {
