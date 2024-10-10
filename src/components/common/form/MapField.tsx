@@ -10,9 +10,10 @@ interface MapFieldProps {
 }
 
 const MapField: React.FC<MapFieldProps> = ({ name, label }) => {
-    const { control, setValue } = useFormContext();
+    const { control, setValue, watch } = useFormContext();
     const {
         center,
+        setCenter,
         setPrediction,
         setInputValue,
         inputValue,
@@ -20,6 +21,25 @@ const MapField: React.FC<MapFieldProps> = ({ name, label }) => {
         isLoading,
         placeSelected,
     } = useGoogleMaps();
+
+    const [locationLoc, locationLat, locationName, locationFormattedAddr] =
+        watch([
+            `${name}.lon`,
+            `${name}.lat`,
+            `${name}.name`,
+            `${name}.formatted_address`,
+        ]);
+
+    useEffect(() => {
+        if (!placeSelected) {
+            setInputValue(locationName);
+            setCenter(
+                locationLat && locationLoc
+                    ? [locationLat, locationLoc]
+                    : [1.296568, 103.852119]
+            );
+        }
+    }, [locationLoc, locationLat, locationName, locationFormattedAddr]);
 
     return (
         <Controller
