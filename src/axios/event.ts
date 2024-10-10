@@ -1,5 +1,6 @@
 import { EventDetails, EventListingItem } from "../types/event";
 import { AddEventFormI } from "../zod-schema/addEventSchema";
+import { EditEventFormI } from "../zod-schema/editEventSchema";
 import { eventInstance } from "./client";
 
 export const getPastEvents = async () => {
@@ -45,6 +46,38 @@ export const addEvent = async ({
     };
 
     const { data } = await eventInstance.post("/create", payload);
+    return data.message as string;
+};
+
+export const editEvent = async (
+    {
+        start_time,
+        end_time,
+        accessibility,
+        location,
+        name_cn,
+        name_en,
+        staff_present,
+        date,
+        description,
+    }: EditEventFormI,
+    id: string
+) => {
+    if (id === "") return "Event id incorrect, please refresh this page!";
+
+    const payload = {
+        event_name: name_en,
+        event_name_cn: name_cn,
+        event_date: date.format("YYYY-MM-DD"),
+        start_time: start_time.format("HHmm"),
+        end_time: end_time.format("HHmm"),
+        event_location: location,
+        desciption: description,
+        wheelchair_accessible: accessibility,
+        staff: staff_present.map(({ name }) => name),
+    };
+
+    const { data } = await eventInstance.patch(`/${id}`, payload);
     return data.message as string;
 };
 
