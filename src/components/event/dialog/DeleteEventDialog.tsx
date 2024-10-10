@@ -6,15 +6,21 @@ import {
     DialogContentText,
     DialogTitle,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import useDeleteEvent from "../../../custom-hooks/react-query/event/useDeleteEvent";
 
 interface DeleteEventDialogProps {
     id: string;
     name: string;
 }
 
-const DeleteEventDialog: React.FC<DeleteEventDialogProps> = ({ name }) => {
+const DeleteEventDialog: React.FC<DeleteEventDialogProps> = ({ id, name }) => {
     const [open, setOpen] = useState(false);
+    const { mutate, isSuccess } = useDeleteEvent();
+
+    useEffect(() => {
+        if (isSuccess) setOpen(false);
+    }, [isSuccess]);
 
     return (
         <>
@@ -39,7 +45,7 @@ const DeleteEventDialog: React.FC<DeleteEventDialogProps> = ({ name }) => {
                     <Button
                         color="error"
                         variant="contained"
-                        onClick={() => setOpen(false)}
+                        onClick={() => mutate(id)}
                     >
                         Confirm Delete
                     </Button>
