@@ -1,31 +1,37 @@
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Container, Divider, Grid, Typography } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
+import { useNavigate, useParams } from "react-router-dom";
+import ParticipantsDisplay from "../../components/event/section/display/ParticipantsDisplay";
 import BasicEventDetailsSection from "../../components/event/section/form/BasicEventDetailsSection";
 import StaffPresentSection from "../../components/event/section/form/StaffPresentSection";
-import ParticipantsDisplay from "../../components/event/section/display/ParticipantsDisplay";
-import { AttendeeListItem } from "../../types/event";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { editEventSchema } from "../../zod-schema/editEventSchema";
+import usePopulateEventDetailForm from "../../custom-hooks/form/usePopulateEventDetailsForm";
+import useEventById from "../../custom-hooks/react-query/event/useEventById";
+import {
+    EditEventFormI,
+    editEventSchema,
+} from "../../zod-schema/editEventSchema";
+import useEditEvent from "../../custom-hooks/react-query/event/useEditEvent";
 
 interface EditEventProps {}
 
-const attendee_list: AttendeeListItem[] = [
-    {
-        name: "Rauda",
-        status: "Active",
-        reason: undefined,
-    },
-    {
-        name: "Joyce Han",
-        status: "Cancelled",
-        reason: "Urgent Matters",
-    },
-];
-
 const EditEvent: React.FC<EditEventProps> = ({}) => {
-    const formState = useForm({resolver: zodResolver(editEventSchema)});
+    const { id } = useParams();
+    const { data: event } = useEventById(id);
+    const navigate = useNavigate();
+
+    const formState = useForm<EditEventFormI>({
+        resolver: zodResolver(editEventSchema),
+    });
     const { handleSubmit } = formState;
+
+    usePopulateEventDetailForm(formState, event);
+    const { mutate, isSuccess } = useEditEvent();
+
+    useEffect(() => {
+        if (isSuccess) navigate("/event");
+    }, [isSuccess]);
 
     return (
         <Container maxWidth="xl" sx={{ my: 4 }}>
@@ -38,7 +44,7 @@ const EditEvent: React.FC<EditEventProps> = ({}) => {
                     <Divider sx={{ mb: 2, mt: 4 }} />
                     <ParticipantsDisplay
                         variant="edit"
-                        attendee_list={attendee_list}
+                        attendee_list={event?.participants ?? []}
                     />
                     <Divider sx={{ mb: 2, mt: 4 }} />
                     <StaffPresentSection />
@@ -46,7 +52,7 @@ const EditEvent: React.FC<EditEventProps> = ({}) => {
                     <Grid item>
                         <Button
                             sx={{ float: "right" }}
-                            onClick={handleSubmit((data) => console.log(data))}
+                            onClick={handleSubmit((data) => mutate(data))}
                             variant="contained"
                             color="success"
                         >
