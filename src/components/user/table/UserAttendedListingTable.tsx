@@ -11,11 +11,11 @@ import {
     Typography,
 } from "@mui/material";
 import React from "react";
-import { EventListingItem } from "../../../types/event";
 import { useNavigate } from "react-router-dom";
+import { AttendedEventListingItem } from "../../../types/user";
 
 interface UserAttendedListingTableProps {
-    events: EventListingItem[];
+    events: AttendedEventListingItem[];
 }
 
 const UserAttendedListingTable: React.FC<UserAttendedListingTableProps> = ({
@@ -48,10 +48,10 @@ const UserAttendedListingTable: React.FC<UserAttendedListingTableProps> = ({
                     <TableBody>
                         {events.map(
                             ({
-                                id,
-                                name,
-                                date,
-                                location,
+                                _id: id,
+                                event_name: name,
+                                event_date: date,
+                                event_location: location,
                                 start_time,
                                 end_time,
                             }) => (
@@ -66,7 +66,7 @@ const UserAttendedListingTable: React.FC<UserAttendedListingTableProps> = ({
                                     {[
                                         name,
                                         date,
-                                        location,
+                                        location.name,
                                         `${start_time}-${end_time}`,
                                     ].map((it, index) => (
                                         <TableCell key={`${id}-${index}`}>
