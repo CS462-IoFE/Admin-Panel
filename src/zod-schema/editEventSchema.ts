@@ -1,5 +1,5 @@
-import dayjs, {Dayjs} from "dayjs"
-import * as z from "zod"
+import dayjs, { Dayjs } from "dayjs";
+import * as z from "zod";
 
 const locationSchema = z.object({
     formatted_address: z.string(),
@@ -27,6 +27,7 @@ export const editEventSchema = z.object({
     date: z.instanceof(dayjs as unknown as typeof Dayjs, {
         message: "Please input an appropriate date",
     }),
-})
+    description: z.string().min(3),
+});
 
-export type EditEventFormI = z.infer<typeof editEventSchema>
+export type EditEventFormI = z.infer<typeof editEventSchema>;
