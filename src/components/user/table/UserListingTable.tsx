@@ -60,7 +60,7 @@ const UserListingTable: React.FC<UserListingTableProps> = ({}) => {
                                     ? a.name.localeCompare(b.name)
                                     : b.name.localeCompare(a.name);
                             })
-                            .map(({ id, name, date, role }) => (
+                            .map(({ id, name, date, role, email }) => (
                                 <TableRow
                                     key={id}
                                     sx={{
@@ -84,7 +84,7 @@ const UserListingTable: React.FC<UserListingTableProps> = ({}) => {
                                             variant="contained"
                                             color="primary"
                                             onClick={() =>
-                                                navigate(`/user/${id}`)
+                                                navigate(`/user/${email}`)
                                             }
                                         >
                                             View
