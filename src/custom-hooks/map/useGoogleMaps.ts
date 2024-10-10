@@ -18,10 +18,6 @@ const useGoogleMaps = () => {
     const [center, setCenter] = useState([1.296568, 103.852119]);
 
     useEffect(() => {
-        console.log(inputValue)
-    },[inputValue])
-
-    useEffect(() => {
         if (!places || !map) return;
 
         setAutocompleteService(new places.AutocompleteService());
@@ -38,7 +34,7 @@ const useGoogleMaps = () => {
                 input: inputValue,
                 sessionToken,
             }),
-        enabled: !!autocompleteService && inputValue.length > 0,
+        enabled: !!autocompleteService && !!inputValue && inputValue.length > 0,
     });
 
     const { data: placeSelected } = useQuery({
@@ -68,6 +64,7 @@ const useGoogleMaps = () => {
     return {
         setInputValue,
         setPrediction,
+        setCenter,
         predictionResults,
         isLoading,
         placeSelected,
