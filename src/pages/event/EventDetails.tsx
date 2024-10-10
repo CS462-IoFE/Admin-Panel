@@ -11,7 +11,6 @@ interface EventDetailsProps {}
 const EventDetails: React.FC<EventDetailsProps> = ({}) => {
     const navigate = useNavigate();
     const { id } = useParams();
-    console.log(id);
     const { data: event } = useEventById(id || "");
 
     return (
