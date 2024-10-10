@@ -31,7 +31,7 @@ const MapField: React.FC<MapFieldProps> = ({ name, label }) => {
         ]);
 
     useEffect(() => {
-        if (!placeSelected) {
+        if (!placeSelected && locationName && locationLat && locationLoc) {
             setInputValue(locationName);
             setCenter(
                 locationLat && locationLoc
