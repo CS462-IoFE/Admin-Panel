@@ -21,7 +21,7 @@ export default createBrowserRouter([
             { path: "/event/:id/edit", element: <EditEvent /> },
             { path: "/reports", element: <Reports /> },
             { path: "/user", element: <UserListing /> },
-            { path: "/user/:id", element: <UserDetails /> },
+            { path: "/user/:email", element: <UserDetails /> },
         ],
     },
 ]);
