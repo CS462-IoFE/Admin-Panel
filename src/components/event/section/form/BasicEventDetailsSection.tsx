@@ -23,10 +23,16 @@ const BasicEventDetailsSection: React.FC<
                 <TimePicker name="end_time" label="End Time" />
                 <CheckBox name="accessibility" label="Wheelchair Accessible?" />
             </Grid>
-            <MapField 
-                name="location"
-                label="Event Location & Address"
-            />
+            <Grid item>
+                <TextField
+                    name="description"
+                    label="Description"
+                    multiline
+                    rows={4}
+                    sx={{ width: 650 }}
+                />
+            </Grid>
+            <MapField name="location" label="Event Location & Address" />
         </Grid>
     );
 };
