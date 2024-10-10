@@ -32,8 +32,8 @@ const RemarksSection: React.FC<RemarksSectionProps> = ({ remarks }) => {
                     </Button>
                 </Grid>
                 <Grid mt={3} container direction="column" gap={3}>
-                    {remarks.map(({ id, date, text }) => (
-                        <Grid key={id} container direction="column">
+                    {remarks.map(({ date, text }, index) => (
+                        <Grid key={index} container direction="column">
                             <Typography variant="subtitle2" fontWeight={700}>
                                 {date}
                             </Typography>
