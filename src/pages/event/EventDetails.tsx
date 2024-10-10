@@ -1,45 +1,18 @@
 import { Button, Container, Divider, Grid, Typography } from "@mui/material";
 import React from "react";
-import { useNavigate } from "react-router-dom";
-import { EventDetails as EventDetailsType } from "../../types/event";
+import { useNavigate, useParams } from "react-router-dom";
 import EventDetailsDisplay from "../../components/event/section/display/EventDetailsDisplay";
 import ParticipantsDisplay from "../../components/event/section/display/ParticipantsDisplay";
 import StaffPresentDisplay from "../../components/event/section/display/StaffPresentDisplay";
+import useEventById from "../../custom-hooks/react-query/event/useEventById";
 
 interface EventDetailsProps {}
 
-const data: EventDetailsType = {
-    name_en: "Mass Acitivity - Water Related",
-    name_cn: "多人 - 水上活动",
-    date: "08 Jan 2024",
-    start_time: "10:00am",
-    end_time: "12:00pm",
-    location: {
-        formatted_address: "81 Victoria St, Singapore 188065",
-        lat: 1.2962727,
-        lon: 103.8501578,
-        name: "Singapore Management University",
-    },
-    meeting_location: "Redhill MRT Station",
-    accessibility: false,
-    attendee_list: [
-        {
-            name: "Rauda",
-            status: "Active",
-            reason: undefined,
-        },
-        {
-            name: "Joyce Han",
-            status: "Cancelled",
-            reason: "Urgent Matters",
-        },
-    ],
-    staff_list: ["Julia", "Slyvester"],
-};
-
 const EventDetails: React.FC<EventDetailsProps> = ({}) => {
     const navigate = useNavigate();
-    const { attendee_list, staff_list, ...rest } = data;
+    const { id } = useParams();
+    console.log(id);
+    const { data: event } = useEventById(id || "");
 
     return (
         <Container maxWidth="xl" sx={{ my: 4 }}>
@@ -47,14 +20,18 @@ const EventDetails: React.FC<EventDetailsProps> = ({}) => {
                 Event Details
             </Typography>
             <Grid container direction="column">
-                <EventDetailsDisplay {...rest} />
-                <Divider sx={{ mb: 2, mt: 4 }} />
-                <ParticipantsDisplay
-                    variant="details"
-                    attendee_list={attendee_list}
-                />
-                <Divider sx={{ mb: 2, mt: 4 }} />
-                <StaffPresentDisplay staff_list={staff_list} />{" "}
+                {event && (
+                    <>
+                        <EventDetailsDisplay {...event} />
+                        <Divider sx={{ mb: 2, mt: 4 }} />
+                        <ParticipantsDisplay
+                            variant="details"
+                            attendee_list={event.participants}
+                        />
+                        <Divider sx={{ mb: 2, mt: 4 }} />
+                        <StaffPresentDisplay staff_list={event.staff} />
+                    </>
+                )}
                 <Divider sx={{ my: 2 }} />
                 <Grid item>
                     <Button
