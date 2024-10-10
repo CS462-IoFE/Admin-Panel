@@ -1,6 +1,3 @@
-import React from "react";
-import { Location } from "../../../../types/event";
-import { Grid, Typography } from "@mui/material";
 import {
     AccessibleRounded,
     AlarmRounded,
@@ -8,28 +5,22 @@ import {
     GroupsRounded,
     LocationOnRounded,
 } from "@mui/icons-material";
+import { Grid, Typography } from "@mui/material";
 import { Map, Marker } from "@vis.gl/react-google-maps";
+import React from "react";
+import { EventDetails } from "../../../../types/event";
 
-interface EventDetailsDisplayProps {
-    name_en: string;
-    name_cn: string;
-    date: string;
-    start_time: string;
-    end_time: string;
-    location: Location;
-    meeting_location: string;
-    accessibility: boolean;
-}
+interface EventDetailsDisplayProps extends EventDetails {}
 
 const EventDetailsDisplay: React.FC<EventDetailsDisplayProps> = ({
-    name_cn,
-    name_en,
-    date,
+    event_name,
+    event_name_cn,
+    event_date,
     start_time,
     end_time,
-    location,
-    meeting_location,
-    accessibility,
+    event_location,
+    final_meeting_location,
+    wheelchair_accessible,
 }) => {
     return (
         <Grid
@@ -42,13 +33,13 @@ const EventDetailsDisplay: React.FC<EventDetailsDisplayProps> = ({
             <Grid item>
                 <Grid container direction="column">
                     <Typography variant="h5" fontWeight={700}>
-                        {name_en}
+                        {event_name}
                     </Typography>
-                    <Typography variant="h6">{name_cn}</Typography>
+                    <Typography variant="h6">{event_name_cn}</Typography>
                     {[
                         {
                             icon: <CalendarMonthRounded />,
-                            str: `Event Date: ${date}`,
+                            str: `Event Date: ${event_date}`,
                         },
                         {
                             icon: <AlarmRounded />,
@@ -56,16 +47,20 @@ const EventDetailsDisplay: React.FC<EventDetailsDisplayProps> = ({
                         },
                         {
                             icon: <GroupsRounded />,
-                            str: `Meeting Location: ${meeting_location}`,
+                            str: `Meeting Location: ${
+                                final_meeting_location?.name ?? "Undecided"
+                            }`,
                         },
                         {
                             icon: <LocationOnRounded />,
-                            str: `Event Location: ${location.name}`,
+                            str: `Event Location: ${event_location.name}`,
                         },
                         {
                             icon: <AccessibleRounded />,
                             str: `Wheelchair ${
-                                accessibility ? "Accessible" : "Inaccessible"
+                                wheelchair_accessible
+                                    ? "Accessible"
+                                    : "Inaccessible"
                             }`,
                         },
                     ].map(({ icon, str }) => (
@@ -85,10 +80,16 @@ const EventDetailsDisplay: React.FC<EventDetailsDisplayProps> = ({
             <Grid item width={480} height={280}>
                 <Map
                     defaultZoom={15}
-                    center={{ lat: location.lat, lng: location.lon }}
+                    center={{
+                        lat: event_location.lat,
+                        lng: event_location.lon,
+                    }}
                 >
                     <Marker
-                        position={{ lat: location.lat, lng: location.lon }}
+                        position={{
+                            lat: event_location.lat,
+                            lng: event_location.lon,
+                        }}
                     />
                 </Map>
             </Grid>
