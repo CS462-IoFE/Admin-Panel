@@ -1,23 +1,24 @@
 export interface EventListingItem {
-    id: string;
-    name: string;
-    date: string;
-    location: string;
+    _id: string;
+    event_name: string;
+    event_date: string;
+    event_location: Location;
     start_time: string;
     end_time: string;
 }
 
 export interface EventDetails {
-    name_en: string;
-    name_cn: string;
-    date: string;
+    event_name: string;
+    event_name_cn: string;
+    event_date: string;
     start_time: string;
     end_time: string;
-    location: Location;
-    meeting_location: string;
-    accessibility: boolean;
-    attendee_list: AttendeeListItem[];
-    staff_list: string[];
+    event_location: Location;
+    meeting_location: Location[];
+    final_meeting_location?: Location;
+    wheelchair_accessible: boolean;
+    participants: AttendeeListItem[];
+    staff: string[];
 }
 
 export interface Location {
