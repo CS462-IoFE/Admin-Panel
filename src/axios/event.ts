@@ -40,7 +40,7 @@ export const addEvent = async ({
         end_time: end_time.format("HHmm"),
         event_location: location,
         meeting_location: meeting_locations,
-        desciption: description,
+        description: description,
         wheelchair_accessible: accessibility,
         staff: staff_present.map(({ name }) => name),
     };
@@ -72,7 +72,7 @@ export const editEvent = async (
         start_time: start_time.format("HHmm"),
         end_time: end_time.format("HHmm"),
         event_location: location,
-        desciption: description,
+        description: description,
         wheelchair_accessible: accessibility,
         staff: staff_present.map(({ name }) => name),
     };
