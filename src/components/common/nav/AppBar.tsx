@@ -23,6 +23,7 @@ const AppBar: React.FC<AppBarProps> = ({}) => {
                         component="div"
                         flexGrow={1}
                         minWidth={150}
+                        sx={{ cursor: "pointer" }}
                     >
                         MINDS Together
                     </Typography>
@@ -38,9 +39,23 @@ const AppBar: React.FC<AppBarProps> = ({}) => {
                             { to: "/reports", name: "Reports" },
                             { to: "/user", name: "Users" },
                         ].map(({ to, name }) => (
-                            <Typography key={name} onClick={() => navigate(to)}>
-                                {name}
-                            </Typography>
+                            <Box
+                                key={name}
+                                onClick={() => navigate(to)}
+                                sx={{
+                                    cursor: "pointer",
+                                    padding: "10px 15px", // Add padding to create box effect
+                                    borderRadius: "4px", // Rounded corners
+                                    backgroundColor: "transparent", // Default background color
+                                    "&:hover": {
+                                        backgroundColor: "#d0d0d0", 
+                                        color: "black", // Change text color on hover
+                                        textDecoration: "underline", // Add underline on hover
+                                    },
+                                }}
+                            >
+                                <Typography>{name}</Typography>
+                            </Box>
                         ))}
                     </Grid>
                 </Toolbar>
