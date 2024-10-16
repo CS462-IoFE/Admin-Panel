@@ -10,7 +10,7 @@ interface RemarksSectionProps {
 
 const RemarksSection: React.FC<RemarksSectionProps> = ({ remarks }) => {
     const formState = useForm();
-    const { handleSubmit, setValue } = formState;
+    const { handleSubmit, reset } = formState;
 
     return (
         <FormProvider {...formState}>
@@ -22,7 +22,7 @@ const RemarksSection: React.FC<RemarksSectionProps> = ({ remarks }) => {
                 <Grid item>
                     <Button
                         onClick={handleSubmit((data) => {
-                            setValue("remark", "");
+                            reset();
                             console.log(data);
                         })}
                         color="primary"
