@@ -1,16 +1,28 @@
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Grid, Typography } from "@mui/material";
 import React from "react";
-import TextField from "../../common/form/TextField";
 import { FormProvider, useForm } from "react-hook-form";
+import useAddRemark from "../../../custom-hooks/react-query/user/useAddRemark";
 import { Remark } from "../../../types/user";
+import {
+    AddRemarkFormI,
+    addRemarkSchema,
+} from "../../../zod-schema/addRemarkSchema";
+import TextField from "../../common/form/TextField";
+import { useParams } from "react-router-dom";
+import { enqueueSnackbar } from "notistack";
 
 interface RemarksSectionProps {
     remarks: Remark[];
 }
 
 const RemarksSection: React.FC<RemarksSectionProps> = ({ remarks }) => {
-    const formState = useForm();
+    const formState = useForm<AddRemarkFormI>({
+        resolver: zodResolver(addRemarkSchema),
+    });
     const { handleSubmit, reset } = formState;
+    const { email } = useParams();
+    const { mutate } = useAddRemark();
 
     return (
         <FormProvider {...formState}>
@@ -21,9 +33,19 @@ const RemarksSection: React.FC<RemarksSectionProps> = ({ remarks }) => {
                 <TextField label="Remark" name="remark" multiline rows={4} />
                 <Grid item>
                     <Button
-                        onClick={handleSubmit((data) => {
+                        onClick={handleSubmit(({ remark }) => {
                             reset();
-                            console.log(data);
+                            if (!email) {
+                                enqueueSnackbar(
+                                    "User does not exists in page",
+                                    { variant: "error" }
+                                );
+                            }
+
+                            mutate({
+                                remark,
+                                email: email ?? "",
+                            });
                         })}
                         color="primary"
                         variant="contained"
