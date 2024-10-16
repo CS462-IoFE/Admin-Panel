@@ -29,3 +29,8 @@ export interface Remark {
     date: string;
     text: string;
 }
+
+export interface RemarkPayload {
+    email: string;
+    remark: string;
+}
