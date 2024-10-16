@@ -12,17 +12,21 @@ import {
 } from "@mui/material";
 
 interface ParticipantsDisplayProps {
-    variant: "edit" | "details"
+    variant: "edit" | "details";
     attendee_list: AttendeeListItem[];
 }
 
 const ParticipantsDisplay: React.FC<ParticipantsDisplayProps> = ({
     attendee_list,
-    variant
+    variant,
 }) => {
     return (
         <>
-            <Typography variant="h6" fontWeight={700}>{ variant === "details" ? "Attended/Attending Participants" : "Expected Participants"}</Typography>
+            <Typography variant="h6" fontWeight={700}>
+                {variant === "details"
+                    ? "Attended/Attending Participants"
+                    : "Expected Participants"}
+            </Typography>
             <TableContainer component={Box}>
                 <Table sx={{ minWidth: 600 }}>
                     <TableHead>
@@ -39,22 +43,32 @@ const ParticipantsDisplay: React.FC<ParticipantsDisplayProps> = ({
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {attendee_list.map(({ name, status, reason }) => (
-                            <TableRow
-                                sx={{
-                                    "&:last-child td, &:last-child th": {
-                                        border: 0,
-                                    },
-                                }}
-                                key={name}
-                            >
-                                {[name, status, reason].map((it, index) => (
-                                    <TableCell key={`${it}-${index}`}>
-                                        {it}
-                                    </TableCell>
-                                ))}
-                            </TableRow>
-                        ))}
+                        {attendee_list.map(
+                            ({
+                                user_name,
+                                attendance_status,
+                                cancellation_reason,
+                            }) => (
+                                <TableRow
+                                    sx={{
+                                        "&:last-child td, &:last-child th": {
+                                            border: 0,
+                                        },
+                                    }}
+                                    key={user_name}
+                                >
+                                    {[
+                                        user_name,
+                                        attendance_status,
+                                        cancellation_reason,
+                                    ].map((it, index) => (
+                                        <TableCell key={`${it}-${index}`}>
+                                            {it}
+                                        </TableCell>
+                                    ))}
+                                </TableRow>
+                            )
+                        )}
                     </TableBody>
                 </Table>
             </TableContainer>

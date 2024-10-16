@@ -30,7 +30,7 @@ export interface Location {
 }
 
 export interface AttendeeListItem {
-    name: string;
-    status: string;
-    reason?: string;
+    user_name: string;
+    attendance_status: string;
+    cancellation_reason?: string;
 }
