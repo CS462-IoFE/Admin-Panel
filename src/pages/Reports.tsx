@@ -2,37 +2,19 @@ import { Container, Grid, Typography } from "@mui/material";
 import React from "react";
 import TwinBarChart from "../components/report/chart/TwinBarChart";
 import SingleLineChart from "../components/report/chart/SingleLineChart";
+import useReports from "../custom-hooks/react-query/report/useReports";
 
 interface ReportsProps {}
 
-const dataset = [
-    {
-        client: 50,
-        volunteer: 10,
-    },
-    {
-        client: 60,
-        volunteer: 8,
-    },
-    {
-        client: 70,
-        volunteer: 12,
-    },
-    {
-        client: 65,
-        volunteer: 11,
-    },
-    {
-        client: 60,
-        volunteer: 8,
-    },
-    {
-        client: 62,
-        volunteer: 14,
-    },
-];
-
 const Reports: React.FC<ReportsProps> = ({}) => {
+    const {
+        activityCountData,
+        totalHoursData,
+        cumulativeEngagementsData,
+        uniqueEngagementData,
+        averageHoursPerClientData,
+    } = useReports();
+
     return (
         <Container maxWidth="xl" sx={{ my: 4 }}>
             <Typography variant="h3" mb={4}>
@@ -40,26 +22,52 @@ const Reports: React.FC<ReportsProps> = ({}) => {
             </Typography>
             <Grid container>
                 <Grid item xs={6}>
-                    <TwinBarChart dataset={dataset} type="cumulative" />
+                    <TwinBarChart
+                        dataset={
+                            cumulativeEngagementsData
+                                ? cumulativeEngagementsData.map((it) => ({
+                                      client: it.client_count,
+                                      volunteer: it.volunteer_count,
+                                  }))
+                                : []
+                        }
+                        type="cumulative"
+                    />
                 </Grid>
                 <Grid item xs={6}>
-                    <TwinBarChart dataset={dataset} type="unique" />
+                    <TwinBarChart
+                        dataset={
+                            uniqueEngagementData
+                                ? uniqueEngagementData.map((it) => ({
+                                      client: it.client_count,
+                                      volunteer: it.volunteer_count,
+                                  }))
+                                : []
+                        }
+                        type="unique"
+                    />
                 </Grid>
                 <Grid item xs={6}>
                     <SingleLineChart
-                        dataset={[20, 25, 30, 35, 40, 45]}
+                        dataset={activityCountData ?? []}
                         type="activities-count"
                     />
                 </Grid>
                 <Grid item xs={6}>
                     <SingleLineChart
-                        dataset={[20, 25, 30, 35, 40, 45]}
+                        dataset={totalHoursData ?? []}
                         type="total-hours"
                     />
                 </Grid>
                 <Grid item xs={6}>
                     <SingleLineChart
-                        dataset={[20, 25, 30, 35, 40, 45]}
+                        dataset={
+                            averageHoursPerClientData
+                                ? averageHoursPerClientData.map(
+                                      (it) => it.average_hours_per_client
+                                  )
+                                : []
+                        }
                         type="average-hours"
                     />
                 </Grid>
