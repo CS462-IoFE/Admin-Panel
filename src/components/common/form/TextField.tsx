@@ -46,12 +46,12 @@ const TextField: React.FC<TextFieldProps> = ({
 
     return (
         <Controller
-            {...props}
             control={control}
             defaultValue=""
             name={name ? name : "text field"}
             render={({ field, fieldState }) => (
                 <MuiTextField
+                    {...props}
                     {...field}
                     multiline={multiline}
                     rows={rows}
