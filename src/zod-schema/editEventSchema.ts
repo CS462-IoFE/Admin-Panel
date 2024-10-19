@@ -28,6 +28,7 @@ export const editEventSchema = z.object({
         message: "Please input an appropriate date",
     }),
     description: z.string().min(3),
+    description_cn: z.string().min(1),
 });
 
 export type EditEventFormI = z.infer<typeof editEventSchema>;
