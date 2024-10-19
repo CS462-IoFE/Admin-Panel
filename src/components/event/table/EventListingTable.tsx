@@ -29,7 +29,7 @@ const EventListingTable: React.FC<EventListingTableProps> = ({}) => {
         <TableContainer component={Box}>
             <Table sx={{ minWidth: 800 }}>
                 <TableHead>
-                    <TableRow component="th">
+                    <TableRow>
                         {[
                             "Event Name",
                             "Date",

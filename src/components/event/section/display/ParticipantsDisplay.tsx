@@ -30,7 +30,7 @@ const ParticipantsDisplay: React.FC<ParticipantsDisplayProps> = ({
             <TableContainer component={Box}>
                 <Table sx={{ minWidth: 600 }}>
                     <TableHead>
-                        <TableRow component="th">
+                        <TableRow>
                             {[
                                 "Attended/Attending",
                                 "Participation Status",

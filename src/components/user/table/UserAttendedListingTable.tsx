@@ -31,7 +31,7 @@ const UserAttendedListingTable: React.FC<UserAttendedListingTableProps> = ({
             <TableContainer component={Box} maxHeight={500}>
                 <Table stickyHeader sx={{ minWidth: 800 }}>
                     <TableHead>
-                        <TableRow component="th">
+                        <TableRow>
                             {[
                                 "Event Name",
                                 "Date",

@@ -28,7 +28,7 @@ const UserListingTable: React.FC<UserListingTableProps> = ({}) => {
         <TableContainer component={Box}>
             <Table sx={{ minWidth: 800 }}>
                 <TableHead>
-                    <TableRow component="th">
+                    <TableRow>
                         {["User Name", "Join Date", "Role", "Actions"].map(
                             (str) => (
                                 <TableCell sx={{ fontWeight: 600 }} key={str}>
