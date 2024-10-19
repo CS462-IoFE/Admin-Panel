@@ -20,6 +20,7 @@ export interface EventDetails {
     participants: AttendeeListItem[];
     staff: string[];
     description: string;
+    description_cn: string;
 }
 
 export interface Location {

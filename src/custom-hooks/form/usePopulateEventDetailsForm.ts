@@ -22,6 +22,7 @@ const usePopulateEventDetailForm = (
                 staff,
                 wheelchair_accessible,
                 description,
+                description_cn,
             } = event;
 
             reset({
@@ -33,6 +34,7 @@ const usePopulateEventDetailForm = (
                 start_time: dayjs(start_time, "HHmm"),
                 end_time: dayjs(end_time, "HHmm"),
                 description: description,
+                description_cn: description_cn,
                 staff_present: staff.map((staff) => ({ name: staff })),
             });
         }

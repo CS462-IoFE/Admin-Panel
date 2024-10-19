@@ -31,6 +31,7 @@ export const addEvent = async ({
     staff_present,
     date,
     description,
+    description_cn,
 }: AddEventFormI) => {
     const payload = {
         event_name: name_en,
@@ -41,6 +42,7 @@ export const addEvent = async ({
         event_location: location,
         meeting_location: meeting_locations,
         description: description,
+        description_cn: description_cn,
         wheelchair_accessible: accessibility,
         staff: staff_present.map(({ name }) => name),
     };
@@ -60,6 +62,7 @@ export const editEvent = async (
         staff_present,
         date,
         description,
+        description_cn,
     }: EditEventFormI,
     id: string
 ) => {
@@ -73,6 +76,7 @@ export const editEvent = async (
         end_time: end_time.format("HHmm"),
         event_location: location,
         description: description,
+        description_cn: description_cn,
         wheelchair_accessible: accessibility,
         staff: staff_present.map(({ name }) => name),
     };
