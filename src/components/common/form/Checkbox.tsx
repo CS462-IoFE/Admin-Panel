@@ -16,7 +16,7 @@ const CheckBox: React.FC<CheckBoxProps> = ({ name, label }) => {
             name={name}
             render={({ field }) => (
                 <FormControlLabel
-                    control={<Checkbox {...field} />}
+                    control={<Checkbox {...field} checked={!!field.value} />}
                     label={label}
                 />
             )}
