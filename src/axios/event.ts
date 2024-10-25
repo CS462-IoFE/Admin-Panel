@@ -32,6 +32,8 @@ export const addEvent = async ({
     date,
     description,
     description_cn,
+    essential_item,
+    participant_limit,
 }: AddEventFormI) => {
     const payload = {
         event_name: name_en,
@@ -45,6 +47,8 @@ export const addEvent = async ({
         description_cn: description_cn,
         wheelchair_accessible: accessibility,
         staff: staff_present.map(({ name }) => name),
+        essential_item: essential_item.map(({ name }) => name).join(","),
+        participant_limit: participant_limit,
     };
 
     const { data } = await eventInstance.post("/create", payload);
@@ -63,6 +67,8 @@ export const editEvent = async (
         date,
         description,
         description_cn,
+        essential_item,
+        participant_limit,
     }: EditEventFormI,
     id: string
 ) => {
@@ -79,6 +85,8 @@ export const editEvent = async (
         description_cn: description_cn,
         wheelchair_accessible: accessibility,
         staff: staff_present.map(({ name }) => name),
+        essential_item: essential_item.map(({ name }) => name).join(","),
+        participant_limit: participant_limit,
     };
 
     const { data } = await eventInstance.patch(`/${id}`, payload);
