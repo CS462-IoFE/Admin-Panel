@@ -29,13 +29,17 @@ const UserListingTable: React.FC<UserListingTableProps> = ({}) => {
             <Table sx={{ minWidth: 800 }}>
                 <TableHead>
                     <TableRow>
-                        {["User Name", "Join Date", "Role", "Actions"].map(
-                            (str) => (
-                                <TableCell sx={{ fontWeight: 600 }} key={str}>
-                                    {str}
-                                </TableCell>
-                            )
-                        )}
+                        {[
+                            "User Name",
+                            "Join Date",
+                            "Role",
+                            "Beacon",
+                            "Actions",
+                        ].map((str) => (
+                            <TableCell sx={{ fontWeight: 600 }} key={str}>
+                                {str}
+                            </TableCell>
+                        ))}
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -60,7 +64,7 @@ const UserListingTable: React.FC<UserListingTableProps> = ({}) => {
                                     ? a.name.localeCompare(b.name)
                                     : b.name.localeCompare(a.name);
                             })
-                            .map(({ id, name, date, role, email }) => (
+                            .map(({ id, name, date, role, email, beacon }) => (
                                 <TableRow
                                     key={id}
                                     sx={{
@@ -73,6 +77,7 @@ const UserListingTable: React.FC<UserListingTableProps> = ({}) => {
                                         name,
                                         date.format("D MMM YYYY"),
                                         role,
+                                        beacon,
                                     ].map((it, index) => (
                                         <TableCell key={`${id}-${index}`}>
                                             {it}
