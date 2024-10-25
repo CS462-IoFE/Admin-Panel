@@ -23,6 +23,8 @@ const usePopulateEventDetailForm = (
                 wheelchair_accessible,
                 description,
                 description_cn,
+                participant_limit,
+                essential_item,
             } = event;
 
             reset({
@@ -36,6 +38,13 @@ const usePopulateEventDetailForm = (
                 description: description,
                 description_cn: description_cn,
                 staff_present: staff.map((staff) => ({ name: staff })),
+                participant_limit: participant_limit,
+                essential_item:
+                    essential_item && essential_item.length > 0
+                        ? essential_item
+                              .split(",")
+                              .map((it) => ({ name: it.trim() }))
+                        : ([] as { name: string }[]),
             });
         }
     }, [event]);
