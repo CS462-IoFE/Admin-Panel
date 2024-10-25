@@ -21,6 +21,8 @@ export interface EventDetails {
     staff: string[];
     description: string;
     description_cn: string;
+    essential_item: string;
+    participant_limit: number;
 }
 
 export interface Location {
