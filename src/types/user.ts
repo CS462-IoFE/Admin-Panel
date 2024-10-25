@@ -6,6 +6,7 @@ export interface UserListingItem {
     created_at: string;
     email: string;
     role: string;
+    beacon?: string;
 }
 
 export interface AttendedEventListingItem {
@@ -23,6 +24,7 @@ export interface UserDetails {
     date: string;
     attended_events: AttendedEventListingItem[];
     remarks: Remark[];
+    user: { beacon: string };
 }
 
 export interface Remark {
