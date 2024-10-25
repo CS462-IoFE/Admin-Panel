@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { EditEventFormI } from "../../../zod-schema/editEventSchema";
 import { editEvent } from "../../../axios/event";
 import { enqueueSnackbar } from "notistack";
@@ -7,6 +7,7 @@ import { enqueueSnackbar } from "notistack";
 const useEditEvent = () => {
     const queryClient = useQueryClient();
     const { id } = useParams();
+    const navigate = useNavigate()
 
     return useMutation({
         mutationFn: async (data: EditEventFormI) =>
@@ -17,6 +18,7 @@ const useEditEvent = () => {
             queryClient.invalidateQueries({
                 queryKey: ["event", "detail", id],
             });
+            navigate("/event")
         },
         onError(error) {
             enqueueSnackbar(error.message, { variant: "error" });
