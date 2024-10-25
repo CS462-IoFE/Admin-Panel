@@ -1,25 +1,25 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Container, Divider, Grid, Typography } from "@mui/material";
-import React, { useEffect } from "react";
+import React from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import ParticipantsDisplay from "../../components/event/section/display/ParticipantsDisplay";
 import BasicEventDetailsSection from "../../components/event/section/form/BasicEventDetailsSection";
+import EssentialItemsSection from "../../components/event/section/form/EssentialItemsSection";
 import StaffPresentSection from "../../components/event/section/form/StaffPresentSection";
 import usePopulateEventDetailForm from "../../custom-hooks/form/usePopulateEventDetailsForm";
+import useEditEvent from "../../custom-hooks/react-query/event/useEditEvent";
 import useEventById from "../../custom-hooks/react-query/event/useEventById";
 import {
     EditEventFormI,
     editEventSchema,
 } from "../../zod-schema/editEventSchema";
-import useEditEvent from "../../custom-hooks/react-query/event/useEditEvent";
 
 interface EditEventProps {}
 
 const EditEvent: React.FC<EditEventProps> = ({}) => {
     const { id } = useParams();
     const { data: event } = useEventById(id);
-    const navigate = useNavigate();
 
     const formState = useForm<EditEventFormI>({
         resolver: zodResolver(editEventSchema),
@@ -27,11 +27,7 @@ const EditEvent: React.FC<EditEventProps> = ({}) => {
     const { handleSubmit } = formState;
 
     usePopulateEventDetailForm(formState, event);
-    const { mutate, isSuccess } = useEditEvent();
-
-    useEffect(() => {
-        if (isSuccess) navigate("/event");
-    }, [isSuccess]);
+    const { mutate } = useEditEvent();
 
     return (
         <Container maxWidth="xl" sx={{ my: 4 }}>
@@ -48,6 +44,8 @@ const EditEvent: React.FC<EditEventProps> = ({}) => {
                     />
                     <Divider sx={{ mb: 2, mt: 4 }} />
                     <StaffPresentSection />
+                    <Divider sx={{ mb: 2, mt: 4 }} />
+                    <EssentialItemsSection />
                     <Divider sx={{ my: 2 }} />
                     <Grid item>
                         <Button
