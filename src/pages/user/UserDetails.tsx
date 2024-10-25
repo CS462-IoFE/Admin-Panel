@@ -21,6 +21,7 @@ const UserDetails: React.FC<UserDetailsProps> = ({}) => {
                 <Grid container direction="column">
                     <Typography>{`Name: ${user.name}`}</Typography>
                     <Typography>{`Join Date: ${user.date}`}</Typography>
+                    <Typography>{`Beacon: ${user?.user?.beacon}`}</Typography>
                     <UserAttendedListingTable events={user.attended_events} />
                     <RemarksSection remarks={user.remarks} />
                     <Divider sx={{ my: 2 }} />
