@@ -33,12 +33,13 @@ const BasicEventDetailsSection: React.FC<
                     }
                 />
                 <TextField name="name_cn" label="Event Name (CN)" />
-                <DatePicker name="date" label="Event Date" />
+                <TextField name="participant_limit" label="Participant Limit" />
+                <CheckBox name="accessibility" label="Wheelchair Accessible?" />
             </Grid>
             <Grid container direction="row" columnGap={2} alignItems="center">
+                <DatePicker name="date" label="Event Date" />
                 <TimePicker name="start_time" label="Start Time" />
                 <TimePicker name="end_time" label="End Time" />
-                <CheckBox name="accessibility" label="Wheelchair Accessible?" />
             </Grid>
             <Grid item>
                 <TextField
