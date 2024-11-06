@@ -27,7 +27,7 @@ const Reports: React.FC<ReportsProps> = ({}) => {
                             cumulativeEngagementsData
                                 ? cumulativeEngagementsData.map((it) => ({
                                       client: it.client_count,
-                                      volunteer: it.volunteer_count,
+                                      caregiver: it.caregiver_count,
                                   }))
                                 : []
                         }
@@ -40,7 +40,7 @@ const Reports: React.FC<ReportsProps> = ({}) => {
                             uniqueEngagementData
                                 ? uniqueEngagementData.map((it) => ({
                                       client: it.client_count,
-                                      volunteer: it.volunteer_count,
+                                      caregiver: it.caregiver_count,
                                   }))
                                 : []
                         }

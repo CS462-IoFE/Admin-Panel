@@ -5,7 +5,7 @@ import React from "react";
 import getPastSixMonths from "../../../helper-functions/getPastSixMonths";
 
 interface TwinBarChartProps {
-    dataset: Array<{ client: number; volunteer: number }>;
+    dataset: Array<{ client: number; caregiver: number }>;
     type: "cumulative" | "unique";
 }
 
@@ -28,8 +28,8 @@ const TwinBarChart: React.FC<TwinBarChartProps> = ({ type, dataset }) => {
                         color: palette.secondary.main,
                     },
                     {
-                        dataKey: "volunteer",
-                        label: "Volunteer",
+                        dataKey: "caregiver",
+                        label: "Caregiver",
                         color: palette.primary.main,
                     },
                 ]}
