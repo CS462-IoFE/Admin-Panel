@@ -1,4 +1,4 @@
-import { Container, Grid, Typography } from "@mui/material";
+import { Container, Divider, Grid, Typography } from "@mui/material";
 import React from "react";
 import TwinBarChart from "../components/report/chart/TwinBarChart";
 import SingleLineChart from "../components/report/chart/SingleLineChart";
@@ -21,6 +21,33 @@ const Reports: React.FC<ReportsProps> = ({}) => {
                 Reports
             </Typography>
             <Grid container>
+                <Grid item xs={12}>
+                    <Typography textAlign="center" variant="h4">
+                        Events-Related
+                    </Typography>
+                </Grid>
+
+                <Grid item xs={6}>
+                    <SingleLineChart
+                        dataset={activityCountData ?? []}
+                        type="activities-count"
+                    />
+                </Grid>
+                <Grid item xs={6}>
+                    <SingleLineChart
+                        dataset={totalHoursData ?? []}
+                        type="total-hours"
+                    />
+                </Grid>
+                <Grid item sx={{py: 4}} xs={12}>
+                    <Divider />
+                </Grid>
+
+                <Grid item xs={12}>
+                    <Typography textAlign="center" variant="h4">
+                        Participants-Related
+                    </Typography>
+                </Grid>
                 <Grid item xs={6}>
                     <TwinBarChart
                         dataset={
@@ -45,18 +72,6 @@ const Reports: React.FC<ReportsProps> = ({}) => {
                                 : []
                         }
                         type="unique"
-                    />
-                </Grid>
-                <Grid item xs={6}>
-                    <SingleLineChart
-                        dataset={activityCountData ?? []}
-                        type="activities-count"
-                    />
-                </Grid>
-                <Grid item xs={6}>
-                    <SingleLineChart
-                        dataset={totalHoursData ?? []}
-                        type="total-hours"
                     />
                 </Grid>
                 <Grid item xs={6}>
